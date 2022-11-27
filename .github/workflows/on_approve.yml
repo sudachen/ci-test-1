@@ -10,10 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.review.state == 'approved' }}
     steps:
-
       - uses: actions/github-script@v5
         id: info
-        if: ${{ steps.approved.outputs.approved == 'true' }}
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
