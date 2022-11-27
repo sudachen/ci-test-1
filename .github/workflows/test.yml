@@ -1,17 +1,22 @@
 
 on:
   pull_request:
+    types: [ synchronize, opened, ready_for_review, labeled, unlabeled ]
   pull_request_review:
-    types: submitted
+    types: [ submitted, labeled, unlabeled ]
     
 jobs:
   conditions:
     runs-on: ubuntu-latest
     steps:
       - run: | 
-          echo ${{ github.event_name }}
-          echo ${{ github.event.action }}
-          echo ${{ github.event.pull_request.toJson() }}
+          echo name ${{ github.event_name }}
+          echo action ${{ github.event.action }}
+          echo files ${{ github.event.pull_request.changed_files }}
+          echo comments ${{ github.event.pull_request.review_comments }}
+          echo continue ${{ github.event_name == 'pull_request' &&
+                   github.event.action == 'synchronize' && 
+                   github.event.pull_request.changed_files >= 1 }}
     #  - uses: luisrjaeger/approved-event-checker@v1.0.0
     #    id: approved
     #    with:
@@ -20,7 +25,7 @@ jobs:
     #    env:
     #      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     #    if: ${{ }} 
-    outputs:
+    outputs:    
       automerge: ${{ 
         github.event_name == 'pull_request_review' &&
         github.event.review.state == 'approved'  }}
