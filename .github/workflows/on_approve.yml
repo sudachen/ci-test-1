@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: | 
-          apt install jq
+          sudo apt-get install -y jq
           echo ${{ toJSON(github) }} | jq
           echo name ${{ github.event_name }}
           echo action ${{ github.event.action }}
