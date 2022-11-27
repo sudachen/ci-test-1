@@ -8,7 +8,9 @@ jobs:
   conditions:
     runs-on: ubuntu-latest
     steps:
-      - run: true
+      - run: | 
+          echo ${{ github.event_name }}
+          echo ${{ github.event.action }}
     #  - uses: luisrjaeger/approved-event-checker@v1.0.0
     #    id: approved
     #    with:
