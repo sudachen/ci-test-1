@@ -11,6 +11,7 @@ jobs:
       - run: | 
           echo ${{ github.event_name }}
           echo ${{ github.event.action }}
+          echo ${{ github.event.pull_request }}
     #  - uses: luisrjaeger/approved-event-checker@v1.0.0
     #    id: approved
     #    with:
