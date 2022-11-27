@@ -1,0 +1,38 @@
+on:
+  pull_request:
+  pull_request_review:
+    types: submitted
+    
+jobs:
+  conditions:
+    runs-on: ubuntu-latest
+    #steps:
+    #  - uses: luisrjaeger/approved-event-checker@v1.0.0
+    #    id: approved
+    #    with:
+    #      approvals: 2
+    #      check_changes_requested: false
+    #    env:
+    #      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #    if: ${{ }} 
+    outputs:
+      automerge: ${{ 
+        github.event_name == 'pull_request_review' &&
+        github.event.review.state == 'approved'  }}
+    #&&contains(github.event.pull_request.labels.*.name, '!ci-automerge')        
+  automerge:
+    needs: conditions
+    if: ${{ needs.conditions.outputs.automerge == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v5
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '👋 Thanks for reporting!'
+            })      
+    
