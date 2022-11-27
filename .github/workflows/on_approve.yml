@@ -14,7 +14,7 @@ jobs:
         uses: luisrjaeger/approved-event-checker@v1
         id: approved
         with:
-          approvals: 2
+          approvals: ${{ env.REVIEWERS_COUNT }}
           check_changes_requested: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      
