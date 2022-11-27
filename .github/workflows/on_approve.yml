@@ -8,7 +8,6 @@ jobs:
     if: ${{ github.event.review.state == 'approved' }}
     steps:
       - uses: actions/github-script@v6
-        if: ${{ steps.approved.outputs.approved == 'true' }}
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
