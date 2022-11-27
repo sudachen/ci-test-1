@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: | 
+          echo ${{ github.event.pull_request.diff_url }}
           echo name ${{ github.event_name }}
           echo action ${{ github.event.action }}
           echo files ${{ github.event.pull_request.changed_files }}
