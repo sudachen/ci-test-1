@@ -25,23 +25,14 @@ jobs:
           result-encoding: string          
       - name: Get result
         run: echo "${{steps.info.outputs.result}}"
-
-      - name: Count review approvals. must be ${{ env.REVIEWERS_COUNT }}
-        uses: luisrjaeger/approved-event-checker@v1
-        id: approved
-        with:
-          approvals: ${{ env.REVIEWERS_COUNT }}
-          check_changes_requested: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      
-      - uses: actions/github-script@v5
-        if: ${{ steps.approved.outputs.approved == 'true' }}
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '👋 Thanks for reporting!'
-            }) 
+      #- uses: actions/github-script@v5
+      #  if: ${{ steps.approved.outputs.approved == 'true' }}
+      #  with:
+      #    github-token: ${{secrets.GITHUB_TOKEN}}
+      #    script: |
+      #      github.rest.issues.createComment({
+      #        issue_number: context.issue.number,
+      #        owner: context.repo.owner,
+      #        repo: context.repo.repo,
+      #        body: '👋 Thanks for reporting!'
+      #      }) 
