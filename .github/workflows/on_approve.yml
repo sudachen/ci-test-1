@@ -6,14 +6,9 @@ env:
   REVIEWERS_COUNT: 2
     
 jobs:
-  conditions:
-    runs-on: ubuntu-latest
-    steps:
-      - run: | 
-          echo "${{ toJSON(github) }}" | jq
   automerge:
     runs-on: ubuntu-latest
-    needs: conditions
+    if: ${{ github.event.review.state == 'approved' }}
     steps:
       - name: Count review approvals. must be ${{ env.REVIEWERS_COUNT }}
         uses: luisrjaeger/approved-event-checker@v1
