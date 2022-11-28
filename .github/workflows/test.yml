@@ -2,7 +2,7 @@ on:
   push:
   
 jobs:
-  conditions:
+  Bors-CI:    
     runs-on: ubuntu-latest
     steps:
       - run: |
